@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">My Storage</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_storage">My storage</string>
+    <string name="아이디">아이디 입력</string>
+    <string name="비밀번호">비밀번호 입력</string>
+    <string name="로그인">로그인</string>
+    <string name="비밀번호변경">비밀번호 변경</string>
+    <string name="아이디찾기">아이디 찾기</string>
+    <string name="회원가입">회원가입</string>
+    <string name="인증">인증번호를 입력해 주세요</string>
+    <string name="전화번호">- 를 빼고 입력해 주세요</string>
+    <string name="인증번호">인증번호 받기</string>
+    <string name="비밀번호확인">비밀번호 확인</string>
+    <string name="닉네임">닉네임 입력</string>
+    <string name="물건검색">내 창고의 물건 검색</string>
+    <string name="목록">목록</string>
+    <string name="구조">구조</string>
+    <string name="창고">창고에 물건을 넣어주세요</string>
+    <string name="example">example</string>
+    <string name="비밀번호체크">비밀번호가 일치하지 않습니다</string>
+    <string name="창고에물건">창고에 물건 넣기</string>
+    <string name="물건이름입력">물건의 이름을 입력해 주세요</string>
+    <string name="물건이름">* 물건 이름</string>
+    <string name="물건구매처">물건 구매처</string>
+    <string name="물건사진">물건 사진</string>
+    <string name="물건위치">물건 위치</string>
+    <string name="물건수량">물건 수량</string>
+    <string name="물건구매처입력">물건의 구매처를 입력해 주세요</string>
+    <string name="물건위치입력">물건을 놓을 위치를 입력해 주세요</string>
+    <string name="구조입력">물건을 넣을 집 구조 정보를 입력해 주세요</string>
+    <string name="정보수정">물건의 정보를 수정할 수 있습니다</string>
+    <string name="물건정보수정하기">물건 정보 수정하기</string>
+    <string name="사용완료비우기버튼">사용 완료 물건 비우기</string>
+    <string name="빈페이지">창고에 물건이 없습니다</string>
+</resources>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.mystorage.data.entity.ItemEntity" />
+
+        <variable
+            name="clickListener"
+            type="com.example.mystorage.utils.listener.ItemClickListener" />
+
+        <variable
+            name="position"
+            type="Integer" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/item_CardView"
+        android:layout_width="match_parent"
+        android:layout_height="207dp"
+        android:layout_margin="10dp"
+        android:background="@{item.selected ? @drawable/brown_bold_bolder : @drawable/bolder}"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{() -> clickListener.onItemClick(position, item.selected)}"
+        android:onLongClick="@{() -> clickListener.onItemLongClick(position, item.selected)}"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bolder">
+
+            <CheckBox
+                android:id="@+id/item_checkbox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:buttonTint="@color/main"
+                android:checked="@{item.selected ? true : false}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="70dp"
+                android:layout_height="85dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/example"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/item_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:imageBitmap="@{item.item_image}"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/item_name"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.item_name}"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/place_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cardView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/place_layout"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bolder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:text="장소 : "
+                    android:textSize="15sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/item_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@{item.item_place}"
+                    android:layout_marginStart="10dp"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/store_layout"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bolder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/place_layout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:text="구매처 : "
+                    android:textSize="15sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/item_store"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@{item.item_store}"
+                    android:textSize="15sp"
+                     />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:text="x "
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/item_count" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/item_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="3dp"
+                android:text="@{String.valueOf(item.item_count)}"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
