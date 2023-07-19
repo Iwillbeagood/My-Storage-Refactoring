@@ -19,18 +19,32 @@
   <li><a href="#2-사용-기술">2. 사용 기술</a></li>
   <li><a href="#3-Architecture">3. Architecture</a></li>
   <li><a href="#4-Overview">4. Overview</a></li>
-  <li><a href="#5-고찰">6. 고찰</a></li>
+  <li><a href="#5-고찰">5. 고찰</a></li>
 </ul>
 <br>
 
 <h2 id="1-프로젝트-배경">1. 프로젝트 배경</h2>
-
-> 물건을 구매하는 과정에서 발생하는 문제를 해결하기 위해 시작된 이 프로젝트는, 필요한 물건을 즉흥적으로 구매하는 습관으로 인해 중복 구매가 빈번히 발생하고, 
-> 집에 이미 존재하는 물건을 잘 파악하지 못하는 문제에 대응하고자 합니다. 
-> 이를 위해 제작된 애플리케이션은 사용자가 불필요한 물건의 중복 구매를 방지할 수 있도록 도와주며, 
-> 구매한 물건을 위치별로 효과적으로 관리할 수 있습니다.
+기존의 프로젝트의 많은 문제가 있었기에 문제를 해결하고 개선하고자 프로젝트를 시작하게 되었습니다.
+<br>
 <br>
 
+**기존의 프로젝트의 문제점**
+
+1. MVVM을 사용하지만 ViewModel은 View의 인스턴스를 직접 접근해 View를 제어하고 있어  **[Android App Archutecture](https://everyday-develop-myself.tistory.com/208)를** 제대로 지키지 못함
+2. ViewModel에서 직접 Retrofit2를 사용하여 네트워크 요청을 처리하는 것은 코드의 복잡성을 증가시킬 수 있으며, 재사용성과 의존성 관리에 어려움을 겪을 수 있다.
+3. AWS EC2를 통해 서버를 할당 받았음으로 유지 보수가 힘들고 지속적으로 이용료가 발생
+4. 서버에 대한 지식의 부족으로 많은 사용자 정보 보안 문제 발생 
+5. 분산화된 프레임워크로 인한 유지 보수가 힘들다. 
+6. RecyclerView.adapter의 사용으로 인한 복잡성 증대
+<br>
+
+**해결책**
+1. 기존의 MVVM을 사용한 패턴에서 Repository를 추가해 네트워크 요청을 따로 처리하고 Hilt를 사용해 의존성을 처리하는 방식으로 기존의 프로젝트를 개선. eventFlow와 LiveData를 사용해 Observer를 적절히 구현해 AAA 원칙을 지킴. 
+2. 서버가 필요하지 않게 애플리케이션의 로그인 기능 제거. 
+3. Android Jetpack Room을 사용해 데이터베이스 구축해 단일 프레임워크 (Android Studio) 사용
+4. RecyclerView.adapter대신 ListAdapter를 사용
+
+   
 <h2 id="2-사용-기술">2. 사용 기술</h2>
 <div align=center><h1>📚 STACKS</h1></div>
 <div align=center> 
