@@ -53,6 +53,7 @@
   
   <img src="https://img.shields.io/badge/android studio-3DDC84?style=for-the-badge&logo=android studio&logoColor=white">
   <br>
+  </div>
 <br>
 
 <div align=center><h1>Tech stack & Open-source libraries</h1></div>
