@@ -13,6 +13,7 @@ import com.example.mystorage.ui.item.add.ItemAddFragment
 import com.example.mystorage.ui.main.MainViewModel.*
 import com.example.mystorage.ui.main.adapter.MyPagerAdapter
 import com.example.mystorage.ui.info.InfoNameEditFragment
+import com.example.mystorage.ui.shoppingList.ShoppingListFragment
 import com.example.mystorage.utils.etc.ActivityUtil.goToNextActivity
 import com.example.mystorage.utils.etc.DialogUtils
 import com.example.mystorage.utils.custom.CustomToast
@@ -35,11 +36,13 @@ class MainActivity : AppCompatActivity() {
         val homeNameChangeView = findViewById<TextView>(R.id.menu_item_change_home_name)
         val strReset = findViewById<TextView>(R.id.menu_item_str_reset)
         val deleteAllItem = findViewById<TextView>(R.id.menu_item_delete_all)
+        val makeShoppingList = findViewById<TextView>(R.id.menu_item_make_shopping_list)
 
         binding.addItemFab.setOnSingleClickListener { onAddItemFabClicked() }
         homeNameChangeView.setOnSingleClickListener { onMenuItemChangeHomeNameClicked() }
         strReset.setOnSingleClickListener { onMenuItemStrResetClicked() }
         deleteAllItem.setOnSingleClickListener { onMenuItemDeleteAll() }
+        makeShoppingList.setOnSingleClickListener { onMakeShoppingList() }
 
         setupViewPager()
         setupTabLayout()
@@ -47,14 +50,6 @@ class MainActivity : AppCompatActivity() {
         repeatOnStarted {
             viewModel.eventFlow.collect { mainEvent -> handleEvent(mainEvent) }
         }
-
-        val callback = object : OnBackPressedCallback(true /* enabled by default */) {
-            override fun handleOnBackPressed() {
-                // Handle the back button event
-            }
-        }
-
-        onBackPressedDispatcher.addCallback(this, callback)
     }
 
     private fun handleEvent(event: MainEvent) = when (event) {
@@ -85,6 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onMenuItemChangeHomeNameClicked() {
+        closeDrawer()
         val infoNameEditFragment = InfoNameEditFragment()
         infoNameEditFragment.show(supportFragmentManager, "InfoNameEditFragment")
     }
@@ -96,7 +92,8 @@ class MainActivity : AppCompatActivity() {
             "확인",
             "취소",
             onPositiveClick = {
-                recreate()
+                goToSetInfoFragment()
+                closeDrawer()
             },
             onNegativeClick = {
             }
@@ -112,14 +109,25 @@ class MainActivity : AppCompatActivity() {
             onPositiveClick = {
                 // 창고에서 물건 제거
                 viewModel.deleteAllItems()
+                closeDrawer()
             },
             onNegativeClick = {
             }
         )
     }
 
+    private fun onMakeShoppingList() {
+        val shoppingListFragment = ShoppingListFragment()
+        shoppingListFragment.show(supportFragmentManager, "ShoppingListFragment")
+        closeDrawer()
+    }
+
     fun showDrawer() {
         binding.drawerLayout.openDrawer(GravityCompat.END)
+    }
+
+    private fun closeDrawer() {
+        binding.drawerLayout.closeDrawer(GravityCompat.END)
     }
 
     fun restartItemListFragment() {
@@ -132,9 +140,5 @@ class MainActivity : AppCompatActivity() {
                 commit()
             }
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
     }
 }

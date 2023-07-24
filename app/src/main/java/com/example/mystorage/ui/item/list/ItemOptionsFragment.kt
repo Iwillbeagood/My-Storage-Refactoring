@@ -49,13 +49,14 @@ class ItemOptionsFragment : DialogFragment() {
 
     private fun handleEvent(event: OptionEvent) = when (event) {
         is OptionEvent.Success -> {
-            showToast(requireActivity(), event.message)
             dismiss()
+            showToast(requireActivity(), event.message)
         }
         is OptionEvent.Error -> showToast(requireActivity(), event.message)
     }
 
     private fun showItemEditDialog(itemID: Int) {
+        dismiss()
         val itemUpdateFragment = ItemUpdateFragment()
         val bundle = Bundle()
         bundle.putInt("itemID", itemID)

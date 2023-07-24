@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mystorage.data.entity.ItemEntity
 import com.example.mystorage.data.repository.ContentRepositoryImpl
-import com.example.mystorage.ui.item.list.ItemOptionsViewModel
 import com.example.mystorage.ui.item.used_item.adapter.UsedItemAdapter
 import com.example.mystorage.utils.etc.ItemState
 import com.example.mystorage.utils.listener.UsedItemClickListener

@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,12 +30,14 @@ import com.example.mystorage.ui.item.structure.ItemStrFragment
 import com.example.mystorage.utils.etc.LoadInfoForSpinner.infoToList
 import com.example.mystorage.utils.custom.CustomToast.showToast
 import com.example.mystorage.utils.etc.*
+import com.example.mystorage.utils.etc.Constants.TAG
+import com.example.mystorage.utils.listener.ImageSelectionListener
 import com.example.mystorage.utils.listener.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.sql.Timestamp
 
 @AndroidEntryPoint
-class ItemAddFragment : DialogFragment() {
+class ItemAddFragment : DialogFragment(), ImageSelectionListener {
     override fun onStart() {
         super.onStart()
         DialogSetUtil.setDialogWindow(dialog!!)
@@ -42,7 +45,6 @@ class ItemAddFragment : DialogFragment() {
 
     private lateinit var binding: FragmentItemAddBinding
     private val viewModel: ItemAddViewModel by viewModels()
-    var items = mutableListOf<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_item_add, container, false)
@@ -52,11 +54,10 @@ class ItemAddFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addItemImageLayout.setOnSingleClickListener {
-            ImageOptionsFragment().show(parentFragmentManager.beginTransaction(), "ImageOptionsFragment")
-        }
-        binding.addPlusBtn.setOnSingleClickListener { onCountBtnClicked(1) }
-        binding.addMinusBtn.setOnSingleClickListener { onCountBtnClicked(-1) }
+        binding.addItemImageLayout.setOnSingleClickListener { onAddItemImageLayoutClicked() }
+
+        binding.addPlusBtn.setOnClickListener { onCountBtnClicked(1) }
+        binding.addMinusBtn.setOnClickListener { onCountBtnClicked(-1) }
         binding.addItemBtn.setOnSingleClickListener { onItemAddButtonClicked() }
         binding.addBackBtn.setOnSingleClickListener { onDismiss(dialog!!) }
 
@@ -70,13 +71,19 @@ class ItemAddFragment : DialogFragment() {
 
     private fun handleEvent(event: ItemAddEvent) = when (event) {
         is ItemAddEvent.Success -> {
-            showToast(requireActivity(), event.message)
             onDismiss(dialog!!)
+            showToast(requireActivity(), event.message)
         }
         is ItemAddEvent.Error -> showToast(requireActivity(), event.message)
         is ItemAddEvent.GetInfo -> onInfoSetting(event.infoEntity)
         is ItemAddEvent.ItemImageAdd -> binding.addItemImageView.setImageBitmap(event.itemImage)
         is ItemAddEvent.ShowConfirmationDialog -> showConfirmationDialog(event.showConfirmation)
+    }
+
+    private fun onAddItemImageLayoutClicked() {
+        val imageOptionsFragment = ImageOptionsFragment()
+        imageOptionsFragment.setImageSelectionListener(this)
+        imageOptionsFragment.show(parentFragmentManager.beginTransaction(), "ImageOptionsFragment")
     }
 
     private fun showConfirmationDialog(showConfirmation: Boolean) {
@@ -122,6 +129,7 @@ class ItemAddFragment : DialogFragment() {
     }
 
     private fun onInfoSetting(infoEntity: InfoEntity) {
+        val items = mutableListOf<String>()
         val spinner = binding.addItemPlaceSpinner
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -129,6 +137,10 @@ class ItemAddFragment : DialogFragment() {
 
         items.addAll(infoToList(infoEntity))
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onImageSelected(imageBitmap: Bitmap) {
+        binding.addItemImageView.setImageBitmap(imageBitmap)
     }
 
     override fun onDismiss(dialog: DialogInterface) {

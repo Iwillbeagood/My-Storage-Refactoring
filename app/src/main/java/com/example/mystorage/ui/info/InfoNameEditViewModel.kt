@@ -1,11 +1,13 @@
 package com.example.mystorage.ui.info
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mystorage.data.entity.InfoEntity
 import com.example.mystorage.data.entity.InfoNameEdit
 import com.example.mystorage.data.repository.ContentRepositoryImpl
 import com.example.mystorage.ui.info.adapter.InfoNameEditAdapter
+import com.example.mystorage.utils.etc.Constants.TAG
 import com.example.mystorage.utils.etc.InfoType
 import com.example.mystorage.utils.etc.LoadInfoForSpinner.infoToListForEdit
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,12 +51,15 @@ class InfoNameEditViewModel @Inject constructor(
             _eventFlow.emit(event)
         }
 
-    private fun insertInfo(infoEntity: InfoEntity) =
+    private fun insertInfo() =
         viewModelScope.launch {
-            contentRepository.insertInfo(infoEntity)
+            if (contentRepository.insertInfo(currentInfo))
+                infoNameEditEvent(InfoNameEditEvent.Success("집 구조 이름을 수정했습니다"))
+            else
+                infoNameEditEvent(InfoNameEditEvent.Error("집 구조 이름 수정에 실패했습니다"))
         }
 
-    fun onInsertInfo() =
+    private fun setEditInfo() =
         viewModelScope.launch {
             currentInfo = currentInfo.copy(
                 room_names = getJsonStringFromCurrentList("room_names", InfoType.ROOM),
@@ -62,6 +67,22 @@ class InfoNameEditViewModel @Inject constructor(
                 etc_name = getJsonStringFromCurrentList("etc_name", InfoType.ETC)
             )
         }
+
+    fun onInsertInfo() {
+        setEditInfo()
+
+        if (checkInfo())
+            insertInfo()
+        else
+            infoNameEditEvent(InfoNameEditEvent.Error("집 구조 이름에는 빈칸이 들어갈 수 없습니다."))
+    }
+
+    private fun checkInfo(): Boolean =
+        if (currentInfo.room_names == "")
+            false
+        else if (currentInfo.bathroom_names == "")
+            false
+        else currentInfo.etc_name != ""
 
     private fun setList(infoEntity: InfoEntity): List<InfoNameEdit> {
         val (roomList, bathList, etcList) = infoToListForEdit(infoEntity)
@@ -88,6 +109,8 @@ class InfoNameEditViewModel @Inject constructor(
     private fun getJsonStringFromCurrentList(keyValue: String, type: InfoType): String {
         val currentList = infoNameEditAdapter.currentList
         val jsonArray = JSONArray()
+
+        Log.d(TAG, "InfoNameEditViewModel - getJsonStringFromCurrentList() $currentList")
 
         currentList.filter { it.type == type }.map {
             jsonArray.put(it.new_name)

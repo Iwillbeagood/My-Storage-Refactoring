@@ -19,11 +19,16 @@ data class ItemEntity(
     val created_at : Timestamp,
     val updated_at : Timestamp,
     val isSelected : Boolean
+    )
+
+data class ListItem(
+    val itemEntity: ItemEntity,
+    val clickMode: Boolean = false
 )
 
 @Entity(tableName = "info_table")
 data class InfoEntity(
-    @PrimaryKey(autoGenerate = true) val infoID : Int,
+    @PrimaryKey val infoID : Int,
     val living_room : Boolean,
     val kitchen : Boolean,
     val storage : Boolean,
@@ -33,15 +38,24 @@ data class InfoEntity(
 )
 
 data class InfoName(
-    val name: String,
+    var name: String,
     val isRoom: Boolean
-)
+){
+    fun setAName(value: String) {
+        name = value
+    }
+}
+
 
 data class InfoNameEdit(
     val origin_name: String,
-    val new_name: String,
+    var new_name: String,
     val type: InfoType
-)
+){
+    fun setNewName(value: String) {
+        new_name = value
+    }
+}
 
 data class ItemGroup(
     val group_name: String,

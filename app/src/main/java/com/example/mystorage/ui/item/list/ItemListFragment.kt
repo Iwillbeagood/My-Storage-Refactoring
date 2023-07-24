@@ -1,26 +1,26 @@
 package com.example.mystorage.ui.item.list
 
+import android.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
+import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mystorage.data.entity.InfoEntity
 import com.example.mystorage.databinding.FragmentItemListBinding
 import com.example.mystorage.ui.item.list.adapter.ItemListAdapter
 import com.example.mystorage.ui.item.list.ItemListViewModel.*
 import com.example.mystorage.ui.main.MainActivity
-import com.example.mystorage.utils.etc.DialogUtils
-import com.example.mystorage.utils.etc.GridSpacingItemDecoration
 import com.example.mystorage.utils.etc.TextWatcherUtil.createTextWatcher
-import com.example.mystorage.utils.etc.VibrationUtils
 import com.example.mystorage.utils.custom.CustomToast.showToast
+import com.example.mystorage.utils.etc.*
 import com.example.mystorage.utils.listener.ItemClickListener
 import com.example.mystorage.utils.listener.setOnSingleClickListener
-import com.example.mystorage.utils.etc.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +28,15 @@ class ItemListFragment : Fragment() {
 
     private lateinit var binding: FragmentItemListBinding
     private val viewModel: ItemListViewModel by viewModels()
-    private var isLongClickMode = false
+
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (binding.longClickModeLayout.visibility == View.VISIBLE) {
+                changeLongClickMode(false)
+                viewModel.exitLongMode()
+            }
+        }
+    }
 
     private val itemListAdapter = ItemListAdapter(
         object : ItemClickListener {
@@ -49,7 +57,8 @@ class ItemListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.tag = "list_item_fragment_tag"
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
 
         setGridRecyclerView()
 
@@ -58,7 +67,10 @@ class ItemListFragment : Fragment() {
         binding.listMenuBtn.setOnSingleClickListener { (activity as? MainActivity)?.showDrawer() }
         binding.moveSelectedItemBtn.setOnSingleClickListener { onMoveSelectedItemClicked() }
         binding.deleteSelectedItemBtn.setOnSingleClickListener { onDeleteSelectedItemClicked() }
-        binding.exitLongClickModeBtn.setOnSingleClickListener { changeLongClickMode(false) }
+        binding.exitLongClickModeBtn.setOnSingleClickListener {
+            changeLongClickMode(false)
+            viewModel.exitLongMode()
+        }
 
         // 검색어로 아이템 찾기
         binding.listSearchEdit.addTextChangedListener(createTextWatcher { searchText ->
@@ -69,8 +81,6 @@ class ItemListFragment : Fragment() {
         binding.selectAllCheckbox.setOnCheckedChangeListener { _, isChecked ->
             viewModel.updateAllItemsSelectedState(isChecked)
         }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { changeLongClickMode(false) }
 
         repeatOnStarted {
             viewModel.eventFlow.collect { itemAddEvent -> handleEvent(itemAddEvent) }
@@ -92,31 +102,38 @@ class ItemListFragment : Fragment() {
         }
         is ItemListEvent.Error -> showToast(requireActivity(), event.message)
         is ItemListEvent.SendItem -> showItemOptionsDialog(event.item.item_ID)
+        is ItemListEvent.GetInfo -> onInfoSetting(event.info)
         is ItemListEvent.LongClickMode -> changeLongClickMode(event.state)
+    }
+
+    private fun onInfoSetting(infoEntity: InfoEntity) {
+        val items = mutableListOf<String>()
+        val spinner = binding.placeSpinner
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, items)
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        items.addAll(LoadInfoForSpinner.infoToList(infoEntity))
+        adapter.notifyDataSetChanged()
     }
 
     private fun changeLongClickMode(state: Boolean) = when(state) {
         true -> {
-            isLongClickMode = true
-            itemListAdapter.isLongClickMode = true
             VibrationUtils.vibrate(requireContext(), 20L)
             binding.longClickModeLayout.visibility = View.VISIBLE
         }
         false -> {
-            isLongClickMode = false
-            itemListAdapter.isLongClickMode = false
             binding.longClickModeLayout.visibility = View.GONE
-            viewModel.exitItemLongMode()
         }
     }
 
     private fun showItemOptionsDialog(itemID: Int) {
-        val itemClickDialogFragment = ItemOptionsFragment()
+        val itemOptionsFragment = ItemOptionsFragment()
         val bundle = Bundle()
         bundle.putInt("itemID", itemID)
 
-        itemClickDialogFragment.arguments = bundle
-        itemClickDialogFragment.show(parentFragmentManager, "ListItemClickDialogFragment")
+        itemOptionsFragment.arguments = bundle
+        itemOptionsFragment.show(parentFragmentManager, "ItemOptionsFragment")
     }
 
     private fun setGridRecyclerView() {

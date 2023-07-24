@@ -94,5 +94,17 @@
         android:text="창고에 물건 전부 제거하기"
         android:gravity="center"
         />
+
+    <TextView
+        android:id="@+id/menu_item_make_shopping_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="사용한 물건으로\n 장바구니 만들기"
+        android:gravity="center"
+        />
 </LinearLayout>
 

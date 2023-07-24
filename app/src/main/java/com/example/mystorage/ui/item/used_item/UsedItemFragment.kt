@@ -36,7 +36,6 @@ class UsedItemFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.tag = "used_item_fragment_tag"
 
         viewModel.usedItemAdapter = usedItemAdapter
 

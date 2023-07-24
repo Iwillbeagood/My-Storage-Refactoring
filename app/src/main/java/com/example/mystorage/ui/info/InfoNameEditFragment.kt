@@ -14,7 +14,9 @@ import com.example.mystorage.utils.etc.DialogSetUtil.setDialogWindow
 import com.example.mystorage.utils.custom.CustomToast.showToast
 import com.example.mystorage.utils.listener.setOnSingleClickListener
 import com.example.mystorage.utils.etc.repeatOnStarted
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InfoNameEditFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()

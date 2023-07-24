@@ -13,8 +13,8 @@
         android:id="@+id/info_name_edit_back"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/ic_baseline_navigate_before_24"
         android:clickable="true"
         android:focusable="true"
@@ -25,9 +25,9 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="집 구조의 이름을 변경할 수 있습니다"
+        android:text="집 구조의 이름을\n 변경할 수 있습니다"
         android:textColor="@color/black"
         android:textSize="23sp"
         android:textStyle="bold"
@@ -38,9 +38,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/info_name_edit_rv"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
         android:layout_marginTop="24dp"
         android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/info_name_edit_btn"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -49,7 +50,7 @@
         style="@style/MaterialButtonStyle"
         android:layout_width="342dp"
         android:layout_height="49dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="56dp"
         android:background="@drawable/brown_background_bolder"
         android:clickable="true"
         android:focusable="true"
@@ -58,6 +59,5 @@
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

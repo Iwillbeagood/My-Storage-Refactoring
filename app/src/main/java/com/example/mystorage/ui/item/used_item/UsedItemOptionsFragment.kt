@@ -46,8 +46,8 @@ class UsedItemOptionsFragment : DialogFragment() {
 
     private fun handleEvent(event: UsedOptionEvent) = when (event) {
         is UsedOptionEvent.Success -> {
-            showToast(requireActivity(), event.message)
             dismiss()
+            showToast(requireActivity(), event.message)
         }
         is UsedOptionEvent.Error -> showToast(requireActivity(), event.message)
     }

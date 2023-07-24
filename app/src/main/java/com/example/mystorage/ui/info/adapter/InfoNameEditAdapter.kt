@@ -1,5 +1,7 @@
 package com.example.mystorage.ui.info.adapter
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -8,20 +10,20 @@ import com.example.mystorage.data.entity.InfoNameEdit
 import com.example.mystorage.databinding.RecyclerInfoNameEditItemBinding
 import com.example.mystorage.utils.diffcallbacks.InfoNameEditDiffCallbacks
 
-class InfoNameEditAdapter(
-) : ListAdapter<InfoNameEdit, InfoNameEditAdapter.ViewHolder>(InfoNameEditDiffCallbacks()) {
+class InfoNameEditAdapter
+    : ListAdapter<InfoNameEdit, InfoNameEditAdapter.ViewHolder>(InfoNameEditDiffCallbacks()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = RecyclerInfoNameEditItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
+        val item = currentList[holder.absoluteAdapterPosition]
         holder.bind(item)
     }
 
-
-    class ViewHolder(
+    inner class ViewHolder(
         private val binding: RecyclerInfoNameEditItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 

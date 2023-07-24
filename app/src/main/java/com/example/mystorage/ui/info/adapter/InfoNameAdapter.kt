@@ -1,5 +1,7 @@
 package com.example.mystorage.ui.info.adapter
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter

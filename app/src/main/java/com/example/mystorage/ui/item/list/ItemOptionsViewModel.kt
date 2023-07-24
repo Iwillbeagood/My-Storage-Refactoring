@@ -37,6 +37,7 @@ class ItemOptionsViewModel @Inject constructor(
             else
                 optionError("물건 정보를 수정하지 못했습니다")
         }
+
     private fun deleteItem(itemEntity: ItemEntity) =
         viewModelScope.launch {
             if (contentRepository.deleteItem(itemEntity))

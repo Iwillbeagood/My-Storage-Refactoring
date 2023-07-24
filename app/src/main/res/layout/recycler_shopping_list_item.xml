@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.mystorage.data.entity.ItemEntity" />
+
+        <variable
+            name="clickListener"
+            type="com.example.mystorage.utils.listener.ShoppingListClickListener" />
+
+        <variable
+            name="position"
+            type="Integer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> clickListener.onShoppingListClicked(position, item.selected)}"
+        android:layout_margin="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_margin="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:imageBitmap="@{item.item_image}" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.item_name}"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintStart_toEndOf="@id/cardView"
+            app:layout_constraintTop_toTopOf="@id/cardView"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            android:layout_marginStart="15dp"/>
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="36dp"
+            android:layout_height="30dp"
+            android:enabled="false"
+            android:checked="@{item.selected ? true : false}"
+            android:layout_marginStart="15dp"
+            android:buttonTint="@color/main"
+            app:layout_constraintBottom_toBottomOf="@id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

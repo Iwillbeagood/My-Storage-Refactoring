@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mystorage.data.entity.InfoEntity
 import com.example.mystorage.data.entity.ItemEntity
 import com.example.mystorage.data.repository.ContentRepositoryImpl
+import com.example.mystorage.ui.item.add.ItemAddViewModel
 import com.example.mystorage.ui.item.structure.adapter.ItemStrAdapter
 import com.example.mystorage.utils.etc.ItemState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +38,14 @@ class ItemStrViewModel @Inject constructor(
         throwable.printStackTrace()
     }
 
+
     init {
+        viewModelScope.launch {
+            contentRepository.getInfo()?.let { infoEntity ->
+                itemStrEvent(ItemStrEvent.GetInfo(infoEntity))
+            }
+        }
+
         contentRepository.flowAllItems(ItemState.NOT_USED)
             ?.onEach { items ->
                 _items.value = items
@@ -44,14 +53,24 @@ class ItemStrViewModel @Inject constructor(
             }?.launchIn(viewModelScope)
     }
 
-    private fun itemListEvent(event: ItemStrEvent) =
+    private fun itemStrEvent(event: ItemStrEvent) =
         viewModelScope.launch {
             _eventFlow.emit(event)
         }
 
+    fun getInfoEntity() =
+        viewModelScope.launch {
+            contentRepository.getInfo()?.let { infoEntity ->
+                itemStrEvent(ItemStrEvent.GetInfo(infoEntity))
+            }
+        }
+
+
     fun filterItemStrList(place_name: String) =
         if (place_name == "전체") {
-            _items.value = _originalItems.value
+            if (!_items.value.isNullOrEmpty()) {
+                _items.value = _originalItems.value
+            } else {}
         } else {
             _items.value = _originalItems.value?.filter { item ->
                 item.item_place.equals(place_name)
@@ -60,7 +79,6 @@ class ItemStrViewModel @Inject constructor(
 
 
     sealed class ItemStrEvent {
-        data class Success(val message: String): ItemStrEvent()
-        data class Error(val message: String): ItemStrEvent()
+          data class GetInfo(val infoEntity: InfoEntity): ItemStrEvent()
     }
 }

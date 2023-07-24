@@ -1,15 +1,18 @@
 package com.example.mystorage.ui.info
 
+import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.example.mystorage.R
 import com.example.mystorage.databinding.ActivityInfoBinding
+import com.example.mystorage.ui.main.MainActivity
+import com.example.mystorage.utils.etc.ActivityUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +24,12 @@ class InfoActivity : AppCompatActivity() {
     private val infoFragment2 = InfoFragment2()
     private val infoFragment3 = InfoFragment3()
 
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            ActivityUtil.goToNextActivity(this@InfoActivity, MainActivity())
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInfoBinding.inflate(layoutInflater)
@@ -30,9 +39,11 @@ class InfoActivity : AppCompatActivity() {
         infoFragment3.viewModel = viewModel
 
         setViewPager()
+
+        this.onBackPressedDispatcher.addCallback(this, callback) //위에서 생성한 콜백 인스턴스 붙여주기
     }
 
-    fun setViewPager() {
+    private fun setViewPager() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
         binding.viewPager.adapter = adapter

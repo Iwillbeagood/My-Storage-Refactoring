@@ -20,11 +20,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Spinner
-            android:id="@+id/place_spinner"
+            android:id="@+id/str_place_spinner"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:paddingStart="20dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

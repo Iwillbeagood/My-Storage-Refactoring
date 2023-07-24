@@ -94,7 +94,7 @@ class ItemAddViewModel @Inject constructor(
 
 
     private fun itemIsValid(itemEntity: ItemEntity): Boolean =
-        if (TextUtils.isEmpty(itemEntity.item_name)) {
+        if (itemEntity.item_name == "") {
             itemAddError("물건 이름은 필수 입니다!")
             false
         } else {

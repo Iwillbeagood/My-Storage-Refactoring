@@ -17,8 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ItemUpdateViewModel @Inject constructor(
     private val contentRepository: ContentRepositoryImpl
-)
-    : ViewModel() {
+): ViewModel() {
 
     private val _eventFlow = MutableSharedFlow<ItemUpdateEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -33,12 +32,6 @@ class ItemUpdateViewModel @Inject constructor(
         }
     }
 
-    fun onItemUpdate(itemEntity: ItemEntity) =
-        viewModelScope.launch {
-            if (itemIsValid(itemEntity))
-                updateItem(itemEntity)
-        }
-
     private fun itemUpdateEvent(event: ItemUpdateEvent) =
         viewModelScope.launch {
             _eventFlow.emit(event)
@@ -46,7 +39,16 @@ class ItemUpdateViewModel @Inject constructor(
 
     private fun updateItem(itemEntity: ItemEntity) =
         viewModelScope.launch {
-            contentRepository.updateItem(itemEntity)
+            if (contentRepository.updateItem(itemEntity))
+                itemUpdateSuccess("물건 정보 수정에 성공했습니다.")
+            else
+                itemUpdateError("물건 정보 수정에 실패했습니다.")
+        }
+
+    fun onItemUpdate(itemEntity: ItemEntity) =
+        viewModelScope.launch {
+            if (itemIsValid(itemEntity))
+                updateItem(itemEntity)
         }
 
     private suspend fun getItemByID(itemID: Int): ItemEntity =
@@ -61,10 +63,9 @@ class ItemUpdateViewModel @Inject constructor(
 
     private fun itemIsValid(itemEntity: ItemEntity): Boolean =
         if (TextUtils.isEmpty(itemEntity.item_name)) {
-            itemUpdateSuccess("물건 이름은 필수 입니다!")
+            itemUpdateError("물건 이름은 필수 입니다!")
             false
         } else {
-            itemUpdateError("Success")
             true
         }
 

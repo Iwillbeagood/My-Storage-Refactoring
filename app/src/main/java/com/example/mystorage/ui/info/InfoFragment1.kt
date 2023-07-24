@@ -1,5 +1,6 @@
 package com.example.mystorage.ui.info
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -15,7 +16,14 @@ class InfoFragment1 : Fragment() {
     private lateinit var binding: FragmentInfo1Binding
     private val handler = Handler()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private var appContext: Context? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        appContext = context
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentInfo1Binding.inflate(inflater, container, false)
         return binding.root
     }
@@ -41,8 +49,15 @@ class InfoFragment1 : Fragment() {
     }
 
     private fun startAnimation(textView: TextView) {
-        val anim = AnimationUtils.loadAnimation(activity, R.anim.fade_in)
-        textView.startAnimation(anim)
-        textView.visibility = TextView.VISIBLE
+        appContext?.let { context ->
+            val anim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+            textView.startAnimation(anim)
+            textView.visibility = TextView.VISIBLE
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        appContext = null
     }
 }

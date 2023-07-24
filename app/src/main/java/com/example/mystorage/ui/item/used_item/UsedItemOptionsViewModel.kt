@@ -39,6 +39,7 @@ class UsedItemOptionsViewModel  @Inject constructor(
             else
                 usedOptionError("사용 완료 물건을 되돌리지 못했습니다")
         }
+
     private fun deleteItem(itemEntity: ItemEntity) =
         viewModelScope.launch {
             if (contentRepository.deleteItem(itemEntity))

@@ -44,6 +44,8 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15sp"
+                android:background="@null"
+                android:onTextChanged="@{ (text, start, before, count) -> info.setAName(text.toString()) }"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="40dp" />

@@ -8,7 +8,6 @@ import com.example.mystorage.R
 
 object BindingUtils {
 
-
     @JvmStatic
     @BindingAdapter("android:onLongClick")
     fun setOnLongClickListener(
@@ -29,5 +28,11 @@ object BindingUtils {
         } else {
             imageView.setImageResource(R.drawable.box)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("isVisible")
+    fun setIsVisible(view: View, isVisible: Boolean) {
+        view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }

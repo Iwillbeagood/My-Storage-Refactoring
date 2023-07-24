@@ -45,6 +45,7 @@ class ContentRepositoryImpl @Inject constructor(
             false
         }
     }
+
     override suspend fun deleteItem(itemEntity: ItemEntity): Boolean = withContext(isDispatcher) {
         try {
             contentDAO.deleteItem(itemEntity)

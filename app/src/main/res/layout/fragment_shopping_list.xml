@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.shoppingList.ShoppingListFragment">
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/shopping_list_back_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_baseline_navigate_before_24"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:text="장바구니"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/shopping_list_back_btn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/shopping_list_empty_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="144dp"
+        android:src="@drawable/ic_baseline_shopping_cart_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/shopping_list_empty_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="장바구니에\n담길 물건이 없습니다"
+        android:textAlignment="center"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopping_list_empty_img" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shopping_list_RV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/shopping_complete_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shopping_complete_btn"
+        style="@style/MaterialButtonStyle"
+        android:layout_width="342dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="56dp"
+        android:background="@drawable/brown_background_bolder"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="쇼핑을 완료했다면 눌러주세요"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

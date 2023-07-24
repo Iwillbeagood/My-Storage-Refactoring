@@ -34,4 +34,5 @@
     <string name="물건정보수정하기">물건 정보 수정하기</string>
     <string name="사용완료비우기버튼">사용 완료 물건 비우기</string>
     <string name="빈페이지">창고에 물건이 없습니다</string>
+    <string name="사용완료빈페이지">사용 완료 물건이 없습니다</string>
 </resources>
