@@ -97,7 +97,7 @@
   <img src="https://github.com/Iwillbeagood/My-Storage/assets/106158445/44e80d7e-c91d-4e7a-a8a7-7b05b327fc60" alt="My Image">
 </p>
 
-My Storage는 사용자에게 집 구조에 대한 정보를 입력받습니다. 로그인 후, 데이터베이스에서 사용자의 ID를 검색하고, 집 구조 정보가 없는 경우 이 프로세스가 시작됩니다. 사용자는 다양한 기본 집 구조 옵션 중에서 선택하여 정보를 입력할 수 있습니다. 또한, 선택한 집 구조의 각 방과 화장실에 대한 이름도 변경할 수 있으며, 필요에 따라 구조를 추가할 수도 있습니다.
+My Storage는 사용자에게 집 구조에 대한 정보를 입력받습니다. 데이터베이스에서 집 구조 정보가 없는 경우 이 프로세스가 시작됩니다. 사용자는 다양한 기본 집 구조 옵션 중에서 선택하여 정보를 입력할 수 있습니다. 또한, 선택한 집 구조의 각 방과 화장실에 대한 이름도 변경할 수 있으며, 필요에 따라 구조를 추가할 수도 있습니다.
 
 이를 통해 My Storage는 사용자들이 자신의 집 구조에 대한 정보를 정확하고 자유롭게 입력하고 수정할 수 있도록 지원합니다. 사용자들은 집 구조에 대한 세부 정보를 개인화할 수 있습니다.
 
@@ -152,16 +152,15 @@ MyStorage에서는 사용자가 목록 페이지와 사용 완료 페이지에�
 ### 4-3. 메인 화면 프로세스
 
 
-메인 화면에서는 물건 추가 버튼과 메뉴 버튼이 제공됩니다. 물건 추가 기능은 영수증 정보를 자동으로 추가하는 방법과 수동으로 입력하는 방법 두 가지가 있습니다. 영수증 정보를 자동으로 처리하는 부분은 머신러닝을 통해 구현 중인 단계입니다.
+메인 화면에서는 물건 추가 버튼과 메뉴 버튼이 제공됩니다. 
 
 <p align="center">
-  <img src="https://github.com/Iwillbeagood/My-Storage/assets/106158445/6b71b2f1-a8d0-48bc-be41-6eb5a95765c3" alt="My Image">
+  <img src="https://github.com/Iwillbeagood/My-Storage-Release-Version/assets/106158445/5354e1d8-858d-4ad5-9a7d-3ddcb5986b1a" alt="My Image">
 </p>
 
 <br>
 
-물건 추가:
-물건 추가 버튼을 클릭하면 사용자는 물건을 추가할 수 있는 옵션을 선택할 수 있습니다. 사용자는 물건의 정보를 수동으로 입력하여 목록에 추가할 수 있습니다.
+물건 추가: 물건 추가 버튼을 클릭하면 사용자는 물건을 추가할 수 있는 옵션을 선택할 수 있습니다. 사용자는 물건의 정보를 수동으로 입력하여 목록에 추가할 수 있습니다.
 
 
  <div align=center> 
@@ -171,12 +170,11 @@ MyStorage에서는 사용자가 목록 페이지와 사용 완료 페이지에�
 <br>
 
 <p align="center">
-  <img src="https://github.com/Iwillbeagood/My-Storage/assets/106158445/d90429d3-7669-41d3-9573-e1fee46a44c1" alt="My Image">
+  <img src="https://github.com/Iwillbeagood/My-Storage-Release-Version/assets/106158445/312858d9-fc7f-4aff-92cb-c0b5d5e0f437" alt="My Image">
 </p>
 <br>
 
-메뉴:
-메뉴 버튼을 클릭하면 다양한 메뉴 옵션을 볼 수 있습니다. 이 중에서는 다음과 같은 탭이 제공됩니다:
+메뉴:메뉴 버튼을 클릭하면 다양한 메뉴 옵션을 볼 수 있습니다. 이 중에서는 다음과 같은 탭이 제공됩니다:
 
 '구조 재설정하기': 사용자는 구조를 재설정할 수 있는 옵션을 선택할 수 있습니다. 이를 통해 사용자는 구조에 변화가 있을 때 필요한 조정을 할 수 있습니다.
 
@@ -184,24 +182,8 @@ MyStorage에서는 사용자가 목록 페이지와 사용 완료 페이지에�
 
 '창고에 물건 전부 제거하기': 사용자는 창고에 있는 모든 물건을 제거할 수 있는 옵션을 선택할 수 있습니다. 이를 통해 사용자는 창고를 초기화하거나 물건을 일괄적으로 삭제할 수 있습니다.
 
+'사용한 물건으로 장바구니 만들기': 사용자는 사용 완료된 물건으로 장바구니를 생성할 수 있습니다. 장바구니에서 물건을 선택하고 '쇼핑을 완료했으면 눌러주세요' 버튼을 클릭하면 해당 물건은 다시 창고로 이동됩니다.
+
 
 위와 같은 기능과 옵션을 제공하는 메인 화면은 사용자가 물건을 효율적으로 추가하고 관리할 수 있도록 도와줍니다. 
-
-<div align=center><h1>Backend</h1></div>
-<h4 align="center">My Storage의 Backend 코드는 아래의 Github Repository에서 확인할 수 있습니다.</h1>
 <br>
- <div align=center> 
-   <a href="https://github.com/Iwillbeagood/My-Storage-PHP">My Storage Backend 링크</a>
-  </div>
-  
-  <br>
-  
-   <div align=center> 
-   <a href="https://everyday-develop-myself.tistory.com/category/Backend">서버에 대한 블로그 링크</a>
-  </div>
-
-  
-<br>
-
-
-
