@@ -11,8 +11,9 @@
 <br>
 
 ## Download
-최신 APK는 [Releases](https://github.com/Iwillbeagood/My-Storage/releases)에서 다운로드 할 수 있습니다.
+https://play.google.com/store/apps/details?id=my_app.mystorage 에서 다운로드 할 수 있습니다.
 
+<br>
 <h2>🗊 목차</h2>
 <ul>
   <li><a href="#1-프로젝트-배경">1. 프로젝트 배경</a></li>
