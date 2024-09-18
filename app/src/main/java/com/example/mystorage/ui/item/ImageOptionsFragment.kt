@@ -23,6 +23,7 @@ import com.example.mystorage.utils.listener.ImageSelectionListener
 import com.example.mystorage.utils.listener.setOnSingleClickListener
 
 class ImageOptionsFragment : DialogFragment() {
+
     override fun onStart() {
         super.onStart()
         dialog?.window?.setWindowAnimations(R.style.DialogAnimation)
